@@ -50,11 +50,32 @@ extension List {
             return list.value
         }
     }
+
+    func reverse() -> List<T> {
+        var i = self.length
+        var values:Array<T> = []
+
+        while (i > 0){
+            values.append(self[i]!)
+            i = i - 1
+        }
+        return List(values)!
+    }
 }
 
 
 class _9_swift_problemsTests: XCTestCase {
 
+    func areEqual(_ listA:List<Int>, _ listB: List<Int>) -> Bool {
+        if (listA.length != listB.length){ return false }
+        var isEqual = true;
+        var i = 0
+        while (i < listA.length){
+            isEqual = isEqual && (listA[i] == listB[i])
+            i = i + 1
+        }
+        return isEqual
+    }
     
     func test_p01_last_item() {
         let last = List(1,2,3,4,5,6,7,8)?.last
@@ -74,5 +95,10 @@ class _9_swift_problemsTests: XCTestCase {
     func test_p04_length() {
         let anwser = List(1, 1, 2, 3, 5, 8)!.length
         XCTAssertEqual(anwser, 6)
+    }
+
+    func test_p05_reverse() {
+        let actual = List(1, 2, 3, 4, 5, 6)?.reverse()
+        XCTAssertTrue(areEqual(actual!, List(6, 5, 4, 3, 2, 1)!))
     }
 }
