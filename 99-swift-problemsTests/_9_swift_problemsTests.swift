@@ -29,6 +29,16 @@ extension List {
         return value
     }
 
+    var length: Int {
+        var i = 0;
+        var list = self;
+        while (list.nextItem?.value != nil) {
+            list = list.nextItem!
+            i += 1
+        }
+        return i + 1
+    }
+
     subscript(index: Int) -> T? {
         get {
             var list = self
@@ -59,5 +69,10 @@ class _9_swift_problemsTests: XCTestCase {
     func test_p03_kth_item() {
         let anwser = List(1,2,3,4,5,6,7,8)![2]!
         XCTAssertEqual(anwser, 2)
+    }
+
+    func test_p04_length() {
+        let anwser = List(1, 1, 2, 3, 5, 8)!.length
+        XCTAssertEqual(anwser, 6)
     }
 }
