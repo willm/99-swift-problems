@@ -17,14 +17,29 @@ extension List {
         }
         return list.value
     }
+
+    var pennultimate: T? {
+        var list = self
+        var value = self.value
+
+        while (list.nextItem?.value != nil) {
+            value = list.value
+            list = list.nextItem!
+        }
+        return value
+    }
 }
 
 class _9_swift_problemsTests: XCTestCase {
 
     
-    func testExample() {
+    func test_p01_last_item() {
         let last = List(1,2,3,4,5,6,7,8)?.last
         XCTAssertEqual(last, 8)
     }
 
+    func test_p02_pennultimate_item() {
+        let last = List(1,2,3,4,5,6,7,8)?.pennultimate
+        XCTAssertEqual(last, 7)
+    }
 }
