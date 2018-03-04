@@ -28,7 +28,20 @@ extension List {
         }
         return value
     }
+
+    subscript(index: Int) -> T? {
+        get {
+            var list = self
+            var i = 0;
+            while (i < (index - 1)) {
+                list = list.nextItem!
+                i += 1
+            }
+            return list.value
+        }
+    }
 }
+
 
 class _9_swift_problemsTests: XCTestCase {
 
@@ -39,7 +52,12 @@ class _9_swift_problemsTests: XCTestCase {
     }
 
     func test_p02_pennultimate_item() {
-        let last = List(1,2,3,4,5,6,7,8)?.pennultimate
-        XCTAssertEqual(last, 7)
+        let anwser = List(1,2,3,4,5,6,7,8)?.pennultimate
+        XCTAssertEqual(anwser, 7)
+    }
+
+    func test_p03_kth_item() {
+        let anwser = List(1,2,3,4,5,6,7,8)![2]!
+        XCTAssertEqual(anwser, 2)
     }
 }
