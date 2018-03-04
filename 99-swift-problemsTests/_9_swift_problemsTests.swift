@@ -1,11 +1,3 @@
-//
-//  _9_swift_problemsTests.swift
-//  99-swift-problemsTests
-//
-//  Created by Will Munn on 04/03/2018.
-//  Copyright © 2018 novation. All rights reserved.
-//
-
 import XCTest
 @testable import _9_swift_problems
 
@@ -63,19 +55,39 @@ extension List {
     }
 }
 
-
-class _9_swift_problemsTests: XCTestCase {
-
-    func areEqual(_ listA:List<Int>, _ listB: List<Int>) -> Bool {
-        if (listA.length != listB.length){ return false }
-        var isEqual = true;
-        var i = 0
-        while (i < listA.length){
-            isEqual = isEqual && (listA[i] == listB[i])
+extension List where T:Equatable {
+    func isPalindrome() -> Bool {
+        let length = self.length
+        if (length == 1) { return true}
+        if ((length - 1) % 2 != 0) { return false }
+        var forwards: Array<T> = []
+        var backwards: Array<T> = []
+        var i = 1
+        while (i < (length / 2) + 1) {
+            forwards.append(self[i]!)
             i = i + 1
         }
-        return isEqual
+        var j = length / 2 + 2
+        while (j < length + 1) {
+            backwards.append(self[j]!)
+            j = j + 1
+        }
+        return areEqual(List(forwards)!, List(backwards)!.reverse())
     }
+}
+
+func areEqual<T>(_ listA:List<T>, _ listB: List<T>) -> Bool where T: Equatable {
+    if (listA.length != listB.length){ return false }
+    var isEqual = true;
+    var i = 0
+    while (i < listA.length){
+        isEqual = isEqual && (listA[i] == listB[i])
+        i = i + 1
+    }
+    return isEqual
+}
+
+class _9_swift_problemsTests: XCTestCase {
     
     func test_p01_last_item() {
         let last = List(1,2,3,4,5,6,7,8)?.last
@@ -100,5 +112,12 @@ class _9_swift_problemsTests: XCTestCase {
     func test_p05_reverse() {
         let actual = List(1, 2, 3, 4, 5, 6)?.reverse()
         XCTAssertTrue(areEqual(actual!, List(6, 5, 4, 3, 2, 1)!))
+    }
+
+    func test_p06_is_palindrone() {
+        XCTAssertTrue(List(1)!.isPalindrome())
+        XCTAssertFalse(List(1, 2)!.isPalindrome())
+        XCTAssertTrue(List(1, 2, 1)!.isPalindrome())
+        XCTAssertTrue(List(1, 2, 3, 2, 1)!.isPalindrome())
     }
 }
